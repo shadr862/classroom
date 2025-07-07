@@ -2,31 +2,84 @@
 
 This is a Classroom Management System built using Angular and ASP.NET Core Web API. It supports features for both **teachers** and **students**, including assignments, quizzes, announcements, and comment systems.
 
----
-
-## 📸 Project Preview
-
-![Classroom System Preview](https://raw.githubusercontent.com/shadr862/classroom/main/images/teacher_dashboard.PNG)
-
-
-> Replace the above link with the actual image URL.
-
----
 
 ## 🔧 Features
 
-- 🧑‍🏫 **Teacher Panel**:
-  - Create and manage classrooms
-  - Post announcements, assignments, and quizzes
-  - View student submissions and quiz results
+### 🧑‍🏫 Teacher Panel
 
-- 🧑‍🎓 **Student Panel**:
-  - Join classrooms
-  - Submit assignments (PDF uploads)
-  - Attempt quizzes and view scores
-  - Comment on announcements and assignments
+#### 📁 Classroom Management
 
-- 💬 **Comments** for announcements and assignments
+- Create and manage classrooms.
+- Invite students via join code.
+
+![Teacher Dashboard](https://raw.githubusercontent.com/shadr862/classroom/main/images/teacher_dashboard.PNG)
+
+---
+
+#### 📢 Announcements
+
+- Post announcements with rich text support.
+- Students can view and comment.
+
+![Announcement Feature](https://raw.githubusercontent.com/shadr862/classroom/main/images/announcement.PNG)
+
+---
+
+#### 📝 Assignments
+
+- Create assignments with deadlines and description.
+- Students can upload PDF submissions.
+- Teachers can review submissions.
+
+![Assignment Creation](https://raw.githubusercontent.com/shadr862/classroom/main/images/assignment.PNG)
+![Assignment Submission](https://raw.githubusercontent.com/shadr862/classroom/main/images/assignment_submission.PNG)
+
+---
+
+#### ❓ Quizzes
+
+- Create multiple choice and true/false quizzes.
+- Automatic scoring and student result viewing.
+
+![Quiz Creation](https://raw.githubusercontent.com/shadr862/classroom/main/images/quiz.PNG)
+![Quiz Result](https://raw.githubusercontent.com/shadr862/classroom/main/images/quiz_result.PNG)
+
+---
+
+### 🧑‍🎓 Student Panel
+
+#### 📋 Dashboard View
+
+- Join classrooms using a code.
+- View all announcements, quizzes, and assignments in one place.
+
+![Student Dashboard](https://raw.githubusercontent.com/shadr862/classroom/main/images/student_dashboard.PNG)
+
+---
+
+#### 🗂️ Assignment Submission
+
+- Upload PDF files for assignments.
+- See submission status and deadlines.
+
+![PDF Upload](https://raw.githubusercontent.com/shadr862/classroom/main/images/pdf_upload.PNG)
+
+---
+
+#### 📊 Quiz Attempt
+
+- Attempt quizzes with instant scoring feedback.
+
+![Quiz Attempt](https://raw.githubusercontent.com/shadr862/classroom/main/images/quiz_attempt.PNG)
+
+---
+
+#### 💬 Comments System
+
+- Comment on announcements and assignments.
+- Supports nested replies.
+
+![Comments](https://raw.githubusercontent.com/shadr862/classroom/main/images/comment_system.PNG)
 
 ---
 
@@ -53,5 +106,10 @@ This is a Classroom Management System built using Angular and ASP.NET Core Web A
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/classroom-project.git
-cd classroom-project
+git clone https://github.com/shadr862/classroom.git
+cd classroom
+
+
+> Make sure you have Node.js, Angular CLI, .NET SDK, and SQL Server installed.
+
+
