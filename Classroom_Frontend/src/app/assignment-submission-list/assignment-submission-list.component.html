@@ -1,0 +1,26 @@
+<div class="submission-list">
+  <h2>Assignment Submissions</h2>
+  <table class="submissions-table">
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Email</th>
+        <th>PDF</th>
+        <th>Reset</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let submission of submissions">
+        <td>{{ submission.student.fullName }}</td>
+        <td>{{ submission.student.email }}</td>
+        <td>
+          <a [href]="submission.downloadUrl" target="_blank">📄 View PDF</a>
+        </td>
+        <td>
+          <button (click)="resetSubmission(submission.submissionId)">🔄 Reset</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -1,0 +1,26 @@
+<div class="login-container">
+  <p class="message" *ngIf="message">{{ message }}</p>
+  <h2>Welcome Back 👋</h2>
+  <p>Please log in to continue</p>
+
+  <form (ngSubmit)="login()" class="login-form">
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input
+        [(ngModel)]="credentials.email"
+        name="email"
+        type="email"
+        placeholder="Enter your email"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+
+  <p class="signup-link">
+    Don’t have an account?
+    <a [routerLink]="'/signup'">Sign up here</a>
+  </p>
+</div>

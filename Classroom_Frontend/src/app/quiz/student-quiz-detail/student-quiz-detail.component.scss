@@ -1,0 +1,63 @@
+.class-header {
+  background: #f5f5f5;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.class-title {
+  margin: 0;
+  font-size: 24px;
+}
+.class-description {
+  color: #666;
+}
+
+.form-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-left: 5px solid #3f51b5;
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.form-header h3 {
+  margin: 0 0 12px 0;
+}
+
+.form-options label {
+  display: block;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.submit-btn {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-btn:disabled {
+  background-color: #9fa8da;
+  cursor: not-allowed;
+}
+
+.deadline-message {
+  padding: 2rem;
+  text-align: center;
+  background-color: #ffe0e0;
+  color: #a80000;
+  border: 1px solid #f5c2c2;
+  border-radius: 12px;
+  font-weight: 500;
+}

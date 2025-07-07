@@ -1,0 +1,46 @@
+<!-- 🎓 Class Header (Centered) -->
+<div class="class-header text-center">
+  <h2 class="class-title">{{ class?.className }}</h2>
+  <p class="class-description">{{ class?.description }}</p>
+</div>
+
+<!-- 📝 Quiz Result Summary -->
+<div class="quiz-summary">
+  <h3>Quiz Submission Summary</h3>
+  <p><strong>Score Obtained:</strong> {{ score }} / {{ questions?.length }}</p>
+</div>
+
+<!-- 📋 Answers Section -->
+<h4 class="answers-title">Your Submitted Answers</h4>
+
+<div *ngIf="questions?.length > 0; else noQuestions">
+  <div *ngFor="let question of questions; let i = index" class="result-card">
+    <p class="question-text"><strong>Q{{ i + 1 }}:</strong> {{ question.questionText }}</p>
+
+    <div class="option-list">
+      <div
+        *ngFor="let option of getOptions(question)"
+        [ngClass]="{
+          'correct-answer': option.key === question.correctAnswer,
+          'selected-answer': option.key === (answers[question.quizId + '_' + question.id] || '')
+        }"
+        class="option-item"
+      >
+        <strong>{{ option.label }}.</strong> {{ option.value }}
+        <span *ngIf="option.key === question.correctAnswer" class="tag correct-tag">✔ Correct</span>
+        <span
+          *ngIf="option.key === (answers[question.quizId + '_' + question.id] || '') && option.key !== question.correctAnswer"
+          class="tag selected-tag"
+        >
+          Your Answer
+        </span>
+      </div>
+    </div>
+
+    <hr />
+  </div>
+</div>
+
+<ng-template #noQuestions>
+  <p>No questions available for this quiz.</p>
+</ng-template>

@@ -1,0 +1,124 @@
+/* Background animation */
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Center the login form */
+.login-container {
+  background: rgba(255, 255, 255, 0.9);
+  width: 360px;
+  margin: 60px auto;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 1s ease;
+}
+
+/* Login text styles */
+.login-container h2 {
+  color: #5e60ce;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.login-container p {
+  color: #4a4a4a;
+  margin-bottom: 20px;
+}
+
+.message {
+  color: #e63946;
+  font-weight: bold;
+}
+
+/* Form input styles */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #5e60ce;
+  outline: none;
+}
+
+/* Button style */
+.btn-primary {
+  background: linear-gradient(90deg, #5e60ce, #7400b8);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #7400b8, #5e60ce);
+}
+
+/* Signup link */
+.signup-link {
+  margin-top: 20px;
+  color: #555;
+}
+
+.signup-link a {
+  color: #7400b8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Fullscreen animated gradient background */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+/* Gradient animation keyframes */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
