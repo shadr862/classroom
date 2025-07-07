@@ -1,0 +1,66 @@
+<!-- 📚 Header like Google Classroom -->
+<div class="header-bar">
+  <h1 class="classroom-header">Your Classes</h1>
+  <button class="plus-button" (click)="openModal()">➕</button>
+</div>
+
+<!-- ✅ Class Creation Modal -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-content">
+    <h2>Create New Class</h2>
+    <form (ngSubmit)="createClass()">
+      <input [(ngModel)]="newClass.className" name="className" placeholder="Class Name" required />
+      <textarea [(ngModel)]="newClass.description" name="description" placeholder="Description"></textarea>
+      <div class="modal-actions">
+        <button type="submit">Create</button>
+        <button type="button" (click)="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ✅ Delete Confirmation Modal -->
+<div class="modal-backdrop" *ngIf="confirmDeleteModal">
+  <div class="modal-content">
+    <h3>Are you sure you want to delete this class?</h3>
+    <p><strong>{{ selectedClass?.className }}</strong></p>
+    <div class="modal-actions">
+      <button (click)="confirmDelete()">Yes, Delete</button>
+      <button (click)="cancelDelete()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Message -->
+<div *ngIf="message" class="alert" [ngClass]="{ 'success': isSuccess, 'error': !isSuccess }">
+  {{ message }}
+</div>
+
+<!-- ✅ Class Grid -->
+<div class="class-grid">
+  <a 
+    class="class-card" 
+    *ngFor="let c of classrooms" 
+    [routerLink]="['/dashboard/teacher/details', c.id]" 
+    style="text-decoration: none; color: inherit;"
+  >
+    <div class="card-header" [style.background]="getRandomColor(c.className)">
+      <h3>{{ c.className }}</h3>
+      <!-- Stop click from bubbling to the routerLink -->
+      <button 
+        class="delete-btn" 
+        (click)="openDeleteModal(c); $event.stopPropagation(); $event.preventDefault();"
+      >
+        🗑
+      </button>
+    </div>
+    <div class="card-body">
+      <p>{{ c.description }}</p>
+      <p class="access-code">
+        <strong>Access Code:</strong> {{ c.accessCode }}
+      </p>
+      <small>Created on: {{ c.createdAt | date:'mediumDate' }}</small>
+    </div>
+  </a>
+</div>
+

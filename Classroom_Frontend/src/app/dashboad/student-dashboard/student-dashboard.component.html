@@ -1,0 +1,80 @@
+<!-- 📚 Header -->
+<div class="header-bar">
+  <h1 class="classroom-header">Joined Classes</h1>
+  <button class="plus-button" (click)="openJoinModal()" title="Join Class">＋</button>
+</div>
+
+<!-- ✅ Join Class Modal -->
+<div class="modal-backdrop" *ngIf="showJoinModal">
+  <div class="modal-content">
+    <h2>Join a Class</h2>
+    <form (ngSubmit)="joinClass()" #joinForm="ngForm">
+      <input
+        [(ngModel)]="accessCode"
+        name="accessCode"
+        placeholder="Enter Class Access Code"
+        required
+        minlength="6"
+        #accessCodeInput="ngModel"
+        class="input-field"
+      />
+      <div *ngIf="accessCodeInput.invalid && accessCodeInput.touched" class="error-message">
+        Access code is required and must be at least 6 characters.
+      </div>
+      <div class="modal-actions">
+        <button type="submit" [disabled]="joinForm.invalid">Join</button>
+        <button type="button" (click)="closeJoinModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ✅ Unenroll Confirmation Modal -->
+<div class="modal-backdrop" *ngIf="confirmUnenrollModal">
+  <div class="modal-content">
+    <h3>Are you sure you want to leave this class?</h3>
+    <p><strong>{{ selectedClass?.className }}</strong></p>
+    <div class="modal-actions">
+      <button (click)="confirmUnenroll()">Yes, Leave Class</button>
+      <button (click)="cancelUnenroll()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Message -->
+<div *ngIf="message" class="alert" [ngClass]="{ success: isSuccess, error: !isSuccess }">
+  {{ message }}
+</div>
+
+<!-- ✅ Class Grid -->
+<div class="class-grid" *ngIf="joinedClasses.length > 0; else noClasses">
+  <a 
+    class="class-card" 
+    *ngFor="let c of joinedClasses" 
+    [routerLink]="['/dashboard/student/details', c.id]"
+    style="text-decoration: none; color: inherit;"
+  >
+    <div class="card-header" [style.background]="getRandomColor(c.className)">
+      <h3 class="card-title">{{ c.className }}</h3>
+      <button 
+        class="unenroll-btn" 
+        (click)="openUnenrollModal(c); $event.stopPropagation(); $event.preventDefault();" 
+        title="Leave Class"
+      >
+        🗑
+      </button>
+    </div>
+    <div class="card-body">
+      <p class="card-description">{{ c.description }}</p>
+      <p class="access-code">
+        <strong>Access Code:</strong> {{ c.accessCode }}
+      </p>
+      <small class="card-date">Joined on: {{ c.createdAt | date: 'mediumDate' }}</small>
+    </div>
+  </a>
+</div>
+
+
+<ng-template #noClasses>
+  <p class="no-classes-message">You have not joined any classes yet.</p>
+</ng-template>

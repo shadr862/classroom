@@ -1,0 +1,75 @@
+<!-- 🏫 Class Header -->
+<div class="class-header">
+    <h2 class="class-title">{{ class?.className }}</h2>
+    <p class="class-description">{{ class?.description }}</p>
+</div>
+
+<!-- ➕ Add Question Button -->
+<div class="action-bar">
+    <button class="add-btn" (click)="openModal()">➕ Add Question</button>
+</div>
+
+<!-- 📋 Question List -->
+<div *ngFor="let question of questions; let i = index" class="form-card">
+    <div class="form-header">
+        <h3>Q{{ i + 1 }}. {{ question.questionText }}</h3>
+        <button class="delete-icon" (click)="deleteQuestion(question.id)" title="Delete">🗑️</button>
+    </div>
+
+    <div class="form-options">
+        <!-- MCQ -->
+        <div *ngIf="question.questionType === 'MCQ'" class="mcq-options">
+            <label><input type="radio" name="q{{ i }}" /> {{ question.optionA }}</label>
+            <label><input type="radio" name="q{{ i }}" /> {{ question.optionB }}</label>
+            <label><input type="radio" name="q{{ i }}" /> {{ question.optionC }}</label>
+            <label><input type="radio" name="q{{ i }}" /> {{ question.optionD }}</label>
+        </div>
+
+        <!-- True/False -->
+        <div *ngIf="question.questionType === 'TrueFalse'" class="tf-options">
+            <label><input type="radio" name="q{{ i }}" /> {{ question.optionA }}</label>
+            <label><input type="radio" name="q{{ i }}" /> {{ question.optionB }}</label>
+        </div>
+    </div>
+
+    <p class="correct-answer">✅ Correct Answer: {{ getCorrectOptionText(question) }}</p>
+</div>
+
+<!-- 🧾 Modal Form -->
+<div class="modal-backdrop" *ngIf="showModal">
+    <div class="modal-content">
+        <h2>Create Question</h2>
+
+        <label>Question Type</label>
+        <select [(ngModel)]="newQuestion.questionType">
+            <option value="MCQ">Multiple Choice</option>
+            <option value="TrueFalse">True/False</option>
+        </select>
+
+        <label>Question Text</label>
+        <input type="text" [(ngModel)]="newQuestion.questionText" placeholder="Enter the question..." />
+
+        <label>Option A</label>
+        <input type="text" [(ngModel)]="newQuestion.optionA" />
+
+        <label>Option B</label>
+        <input type="text" [(ngModel)]="newQuestion.optionB" />
+
+        <div *ngIf="newQuestion.questionType === 'MCQ'">
+            <label>Option C</label>
+            <input type="text" [(ngModel)]="newQuestion.optionC" />
+
+            <label>Option D</label>
+            <input type="text" [(ngModel)]="newQuestion.optionD" />
+        </div>
+
+        <label>Correct Answer (e.g. optionA)</label>
+        <input type="text" [(ngModel)]="newQuestion.correctAnswer" />
+
+        <div class="modal-actions">
+            <button class="modal-add-btn" (click)="addQuestion()">✅ Add</button>
+            <button class="modal-cancel-btn" (click)="closeModal()">❌ Cancel</button>
+        </div>
+
+    </div>
+</div>

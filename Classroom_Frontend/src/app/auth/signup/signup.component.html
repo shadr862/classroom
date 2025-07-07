@@ -1,0 +1,53 @@
+<div class="signup-wrapper">
+  <div class="signup-container">
+    <p class="message" *ngIf="message">{{ message }}</p>
+    <h2>Create an Account 📝</h2>
+    <p>Fill in the information below to sign up</p>
+
+    <form (ngSubmit)="signUp()" class="signup-form">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input
+          [(ngModel)]="user.fullName"
+          name="fullName"
+          placeholder="Enter your full name"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          [(ngModel)]="user.email"
+          name="email"
+          type="email"
+          placeholder="Enter your email"
+          required
+          class="form-control"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Select Role</label>
+        <select
+          [(ngModel)]="user.role"
+          name="role"
+          required
+          class="form-control"
+        >
+          <option value="" disabled selected>Select Role</option>
+          <option value="teacher">Teacher</option>
+          <option value="student">Student</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success">Sign Up</button>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a [routerLink]="'/login'">Log in here</a>
+    </p>
+  </div>
+</div>

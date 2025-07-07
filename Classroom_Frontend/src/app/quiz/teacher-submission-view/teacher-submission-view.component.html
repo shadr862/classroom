@@ -1,0 +1,31 @@
+<div class="submission-container">
+  <h2 class="heading">Quiz Submissions</h2>
+
+  <table class="submission-table" *ngIf="submissions.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Student Name</th>
+        <th>Email</th>
+        <th>Score</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of submissions; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ s.student.fullName }}</td>
+        <td>{{ s.student.email }}</td>
+        <td>{{ s.score }}</td>
+        <td>
+          <button class="reset-btn" (click)="deleteSubmission(s.submissionId)">🔁 Reset</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p>No submissions found for this quiz.</p>
+  </ng-template>
+</div>
+
