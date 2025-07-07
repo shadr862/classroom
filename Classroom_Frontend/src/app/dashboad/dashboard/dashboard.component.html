@@ -1,0 +1,12 @@
+<header class="navbar">
+  <div class="logo">📚 Classroom</div>
+
+  <nav class="nav-right">
+    <span class="user-info">👤 {{ user.fullName }} ({{ user.role }})</span>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </nav>
+</header>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

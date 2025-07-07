@@ -1,0 +1,20 @@
+<div class="comment-section">
+  <h4>Comments</h4>
+
+  <div *ngFor="let c of comments" class="comment-card">
+    <div class="comment-header">
+      <strong>{{ c.name }}</strong> •
+      <small>{{ c.createdAt | date:'short' }}</small>
+
+      <button *ngIf="c.userId === userId" (click)="deleteComment(c.id!)" class="delete-btn"
+        title="Delete comment">🗑️</button>
+    </div>
+    <p>{{ c.content }}</p>
+  </div>
+
+
+  <div class="comment-input">
+    <textarea [(ngModel)]="newComment" rows="2" placeholder="Write a comment..."></textarea>
+    <button (click)="postComment()">➤ Post</button>
+  </div>
+</div>

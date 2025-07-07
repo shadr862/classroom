@@ -1,0 +1,263 @@
+<div class="classroom-detail" *ngIf="classroom">
+  <!-- Header -->
+  <div class="header" [style.background]="getRandomColor(classroom?.className)">
+    <h1>{{ classroom?.className }}</h1>
+    <p class="description">{{ classroom?.description }}</p>
+    <p class="meta">
+      Access Code: <strong>{{ classroom?.accessCode }}</strong> |
+      Created On: {{ classroom?.createdAt | date: 'mediumDate' }}
+    </p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button [class.active]="selectedTab === 'stream'" (click)="selectedTab = 'stream'">📢 Stream</button>
+    <button [class.active]="selectedTab === 'people'" (click)="selectedTab = 'people'">👥 People</button>
+    <button [class.active]="selectedTab === 'quizzes'" (click)="selectedTab = 'quizzes'">📝 Quizzes</button>
+    <button [class.active]="selectedTab === 'announcements'" (click)="selectedTab = 'announcements'">📣
+      Announcements</button>
+    <button [class.active]="selectedTab === 'assignments'" (click)="selectedTab = 'assignments'">📚 Assignments</button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <ng-container [ngSwitch]="selectedTab">
+
+      <!-- Stream -->
+      <div *ngSwitchCase="'stream'">
+        <div *ngIf="(streamData || []).length > 0; else noStream">
+          <ul class="stream-list">
+            <li *ngFor="let a of streamData" class="stream-item">
+
+              <!-- Announcement -->
+              <div *ngIf="a.type == 'Announcement'" class="assignment-list">
+                <div class="assignment-item">
+                  <div class="assignment-title-row">
+                    <h4>{{ a.title }}</h4>
+                    <span class="badge announcement">Announcement</span>
+                  </div>
+
+                  <p class="assignment-description">{{ a.description }}</p>
+
+                  <div class="assignment-meta">
+                    <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                  </div>
+                </div>
+                <!--comments-->
+                <app-comment-section [announcementId]="a.id" [userId]="this.userId" [userName]="this.username">
+                </app-comment-section>
+              </div>
+
+              <!-- Quiz -->
+              <div *ngIf="a.type == 'Quiz'" class="assignment-list">
+                <div class="assignment-item">
+                  <div class="assignment-title-row">
+                    <h4>{{ a.title }}</h4>
+                    <span class="badge quiz">Quiz</span>
+                  </div>
+
+                  <p class="assignment-description">A quiz is scheduled for this topic.</p>
+                  <button *ngIf="!hasAttemptedQuiz(a.id)" class="take-quiz-btn"
+                    [routerLink]="['/dashboard/student/quiz', a.id, a.classroomId]">
+                    Take Quiz
+                  </button>
+
+                  <button *ngIf="hasAttemptedQuiz(a.id)" class="take-quiz-btn"
+                    [routerLink]="['/dashboard/student/quizSubmission', a.id, a.classroomId]">
+                    View Result
+                  </button>
+
+                  <div class="assignment-meta">
+                    <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                    <span><strong>🕒 Deadline:</strong> {{ a.deadline | date:'medium' }}</span>
+                  </div>
+
+                  
+                </div>
+              </div>
+
+              <!-- Assignment -->
+              <div *ngIf="a.type == 'Assignment'" class="assignment-list">
+                <div class="assignment-item">
+                  <div class="assignment-title-row">
+                    <h4>{{ a.title }}</h4>
+                    <span class="badge assignment">Assignment</span>
+                  </div>
+
+                  <p class="assignment-description">{{ a.description }}</p>
+                  <button *ngIf="uploadedSubmissions[a.id]" class="view-pdf-btn" (click)="viewSubmissionPdf(a.id)">
+                    📄 View Uploaded PDF
+                  </button>
+
+                  <!-- Upload Section -->
+                  <div class="assignment-upload" *ngIf="isBeforeDeadline(a.dueDate); else deadlinePassed">
+                    <input type="file" accept="application/pdf" (change)="onFileSelected($event, a.id)" />
+                    <button (click)="uploadAssignment(a.id)" [disabled]="!selectedFiles[a.id]">
+                      📤 Upload PDF
+                    </button>
+                  </div>
+
+                  <!-- Message if deadline has passed -->
+                  <ng-template #deadlinePassed>
+                    <p style="color: red; font-weight: bold;">
+                      ⛔ Submission closed (Deadline passed)
+                    </p>
+                  </ng-template>
+
+                  <div class="assignment-meta">
+                    <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                    <span><strong>🕒 Due:</strong> {{ a.dueDate | date:'medium' }}</span>
+                  </div>
+                </div>
+                <!--comments-->
+                <app-comment-section [assignmentId]="a.id" [userId]="this.userId" [userName]="this.username">
+                </app-comment-section>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+        <ng-template #noStream>
+          <p>No class content yet. Stay tuned!</p>
+        </ng-template>
+      </div>
+
+
+      <!-- People -->
+      <div *ngSwitchCase="'people'" class="people-section">
+        <section class="teacher-info">
+          <h3>Teacher</h3>
+          <p class="teacher-name">{{ classroom?.teacherName }}</p>
+        </section>
+
+        <section class="students-list">
+          <h3>Students List:</h3>
+          <ul>
+            <li *ngFor="let student of classroom?.students" class="student-item">
+              {{ student.fullName }}
+            </li>
+          </ul>
+        </section>
+      </div>
+
+
+      <!-- Quizzes -->
+      <div *ngSwitchCase="'quizzes'" class="assignment-section">
+        <div class="section-header">
+          <h3>📝 Quizzes</h3>
+        </div>
+
+        <div *ngIf="quizzes.length > 0; else noQuiz">
+          <ul class="assignment-list">
+            <li *ngFor="let quiz of quizzes" class="assignment-item">
+              <div class="assignment-title-row">
+                <h4>{{ quiz.title }}</h4>
+                <span class="badge quiz">Quiz</span>
+              </div>
+
+              <p class="assignment-description">A quiz is scheduled for this topic.</p>
+              <button *ngIf="!hasAttemptedQuiz(quiz.id)" class="take-quiz-btn"
+                [routerLink]="['/dashboard/student/quiz', quiz.id, quiz.classroomId]">
+                Take Quiz
+              </button>
+
+              <button *ngIf="hasAttemptedQuiz(quiz.id)" class="take-quiz-btn"
+                [routerLink]="['/dashboard/student/quizSubmission', quiz.id, quiz.classroomId]">
+                View Result
+              </button>
+
+              <div class="assignment-meta">
+                <span><strong>📅 Posted:</strong> {{ quiz.postedOn | date:'medium' }}</span>
+                <span><strong>🕒 Deadline:</strong> {{ quiz.deadline | date:'medium' }}</span>
+              </div>
+
+              
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #noQuiz>
+          <p class="no-quiz-msg">No quizzes assigned yet.</p>
+        </ng-template>
+      </div>
+
+      <!-- Announcements -->
+      <div *ngSwitchCase="'announcements'" class="assignment-section">
+        <div class="section-header">
+          <h3>📣 Announcements</h3>
+        </div>
+
+        <div *ngIf="announcements.length > 0; else noAnnouncements">
+          <ul class="assignment-list">
+            <li *ngFor="let a of announcements" class="assignment-item">
+              <div class="assignment-title-row">
+                <h4>{{ a.title }}</h4>
+                <span class="badge announcement">Announcement</span>
+              </div>
+
+              <p class="assignment-description">{{ a.description }}</p>
+
+              <div class="assignment-meta">
+                <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #noAnnouncements>
+          <p class="no-announcement-msg">No announcements posted yet.</p>
+        </ng-template>
+      </div>
+
+
+      <!-- Assignments -->
+      <div *ngSwitchCase="'assignments'" class="assignment-section">
+        <div class="section-header">
+          <h3>📚 Assignments</h3>
+        </div>
+
+        <div *ngIf="(assignments?.length ?? 0) > 0; else noAssignments">
+          <ul class="assignment-list">
+            <li *ngFor="let a of assignments" class="assignment-item">
+              <div class="assignment-title-row">
+                <h4>{{ a.title }}</h4>
+                <span class="badge assignment">Assignment</span>
+              </div>
+
+              <p class="assignment-description">{{ a.description }}</p>
+
+              <button *ngIf="uploadedSubmissions[a.id]" class="view-pdf-btn" (click)="viewSubmissionPdf(a.id)">
+                📄 View Uploaded PDF
+              </button>
+
+
+
+              <!-- Upload Section -->
+              <div class="assignment-upload" *ngIf="isBeforeDeadline(a.dueDate); else deadlinePassed">
+                <input type="file" accept="application/pdf" (change)="onFileSelected($event, a.id)" />
+                <button (click)="uploadAssignment(a.id)" [disabled]="!selectedFiles[a.id]">
+                  📤 Upload PDF
+                </button>
+              </div>
+
+              <!-- Message if deadline has passed -->
+              <ng-template #deadlinePassed>
+                <p style="color: red; font-weight: bold;">
+                  ⛔ Submission closed (Deadline passed)
+                </p>
+              </ng-template>
+
+              <div class="assignment-meta">
+                <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                <span><strong>🕒 Due:</strong> {{ a.dueDate | date:'medium' }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #noAssignments>
+          <p class="no-assignment-msg">No assignments posted yet.</p>
+        </ng-template>
+      </div>
+
+    </ng-container>

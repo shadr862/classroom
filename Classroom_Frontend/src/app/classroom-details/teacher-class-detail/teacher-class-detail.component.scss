@@ -1,0 +1,418 @@
+.classroom-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.header {
+  padding: 24px;
+  border-radius: 12px;
+  color: #fff;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.description {
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.meta {
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tabs button {
+  padding: 8px 16px;
+  background-color: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tabs button.active {
+  background-color: #4285f4;
+  color: white;
+}
+
+.tab-content {
+  border-top: 1px solid #ddd;
+  padding-top: 16px;
+}
+
+.create-btn {
+  float: right;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.stream-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stream-item {
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.badge.assignment {
+  background-color: #c8e6c9;
+  color: #256029;
+}
+
+.badge.quiz {
+  background-color: #ffe0b2;
+  color: #e65100;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+
+
+.badge.announcement {
+  background-color: #bbdefb;
+  color: #0d47a1;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+  border-color: #4285f4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.modal-actions .primary {
+  background-color: #4285f4;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-actions .primary:hover {
+  background-color: #3367d6;
+}
+
+.modal-actions .cancel {
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-actions .cancel:hover {
+  background-color: #e0e0e0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.people-section {
+  padding: 16px 0;
+}
+
+.teacher-info {
+  margin-bottom: 24px;
+}
+
+.teacher-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  margin-top: 8px;
+}
+
+.students-list h3 {
+  margin-bottom: 12px;
+  border-bottom: 2px solid #4285f4;
+  display: inline-block;
+  padding-bottom: 4px;
+  color: #1a73e8;
+}
+
+.students-list ul {
+  list-style: none;
+  padding-left: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.student-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  color: #333;
+  transition: background-color 0.3s;
+}
+
+.student-item:last-child {
+  border-bottom: none;
+}
+
+.student-item:hover {
+  background-color: #e8f0fe;
+  cursor: default;
+}
+
+/* Unified card style */
+.assignment-item,
+.quiz-item,
+.announcement-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+/* Titles and rows */
+.assignment-title-row,
+.quiz-title-row,
+.announcement-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.assignment-title-row h4,
+.quiz-title,
+.announcement-title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #1a237e;
+}
+
+.assignment-description,
+.quiz-description,
+.announcement-description {
+  font-size: 0.95rem;
+  color: #444;
+  margin: 10px 0;
+}
+
+.assignment-meta,
+.quiz-meta,
+.announcement-meta {
+  font-size: 0.85rem;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Take Quiz Button */
+.take-quiz-btn {
+  background-color: #4285f4;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.take-quiz-btn:hover {
+  background-color: #3367d6;
+}
+
+
+/* Section headers */
+.section-header,
+.quiz-section h3,
+.announcement-section h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.assignment-list,
+.quiz-list-container,
+.announcement-feed {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.no-assignment-msg,
+.no-quiz-msg,
+.no-announcement-msg {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+}
+
+/* Announcement icon */
+.announcement-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.author-icon {
+  font-size: 1.5rem;
+  margin-right: 12px;
+  color: #4285f4;
+}
+
+.header-text {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.timestamp {
+  color: #888;
+  font-size: 0.8rem;
+}
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #1b5edb;
+}
+.assignment-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.assignment-title-row h4 {
+  margin: 0;
+  flex: 1;
+}
+
+.button-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  color: #333;
+}
+
+.delete-btn {
+  color: red;
+}
+
+.assignment-btn {
+  margin-bottom: 10px;
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}

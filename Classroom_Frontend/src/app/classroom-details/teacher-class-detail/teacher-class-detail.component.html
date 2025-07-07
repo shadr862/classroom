@@ -1,0 +1,244 @@
+<div class="classroom-detail" *ngIf="classroom">
+  <!-- Header -->
+  <div class="header" [style.background]="getRandomColor(classroom?.className)">
+    <h1>{{ classroom?.className }}</h1>
+    <p class="description">{{ classroom?.description }}</p>
+    <p class="meta">
+      Access Code: <strong>{{ classroom?.accessCode }}</strong> |
+      Created On: {{ classroom?.createdAt | date: 'mediumDate' }}
+    </p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button [class.active]="selectedTab === 'stream'" (click)="selectedTab = 'stream'">📢 Stream</button>
+    <button [class.active]="selectedTab === 'people'" (click)="selectedTab = 'people'">👥 People</button>
+    <button [class.active]="selectedTab === 'quizzes'" (click)="selectedTab = 'quizzes'">📝 Quizzes</button>
+    <button [class.active]="selectedTab === 'announcements'" (click)="selectedTab = 'announcements'">📣
+      Announcements</button>
+    <button [class.active]="selectedTab === 'assignments'" (click)="selectedTab = 'assignments'">📚 Assignments</button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <ng-container [ngSwitch]="selectedTab">
+
+      <!-- Stream -->
+      <div *ngSwitchCase="'stream'">
+        <div *ngIf="(streamData || []).length > 0; else noStream">
+          <ul class="stream-list">
+            <li *ngFor="let a of streamData" class="stream-item">
+
+              <!-- Announcement -->
+              <div *ngIf="a.type == 'Announcement'" class="assignment-list">
+                <div class="assignment-item">
+                  <div class="assignment-title-row">
+                    <h4>{{ a.title }}</h4>
+                    <span class="badge announcement">Announcement</span>
+                  </div>
+
+                  <p class="assignment-description">{{ a.description }}</p>
+
+                  <div class="assignment-meta">
+                    <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                  </div>
+                </div>
+                <!--comments-->
+                <app-comment-section [announcementId]="a.id" [userId]="this.userId" [userName]="this.username">
+                </app-comment-section>
+
+              </div>
+
+
+
+              <!-- Quiz -->
+              <div *ngIf="a.type == 'Quiz'" class="assignment-list">
+                <div class="assignment-item">
+                  <div class="assignment-title-row">
+                    <h4>{{ a.title }}</h4>
+                    <span class="badge quiz">Quiz</span>
+                  </div>
+
+                  <div class="button-group">
+                    <button class="action-btn"
+                      [routerLink]="['/dashboard/teacher/quiz', a.id, a.classroomId]">Quiz</button>
+                    <button class="action-btn"
+                      [routerLink]="['/dashboard/teacher/SubmissionView', a.id, a.classroomId]">Submissions</button>
+                  </div>
+
+                  <div class="assignment-meta">
+                    <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                    <span><strong>🕒 Deadline:</strong> {{ a.deadline | date:'medium' }}</span>
+                  </div>
+
+
+                </div>
+              </div>
+
+              <!-- Assignment -->
+              <div *ngIf="a.type == 'Assignment'" class="assignment-list">
+                <div class="assignment-item">
+                  <div class="assignment-title-row">
+                    <h4>{{ a.title }}</h4>
+                    <span class="badge assignment">Assignment</span>
+                  </div>
+
+                  <p class="assignment-description">{{ a.description }}</p>
+
+                  <button class="assignment-btn" [routerLink]="['/dashboard/teacher/SubmissionList', a.id]">View
+                    Submission</button>
+
+                  <div class="assignment-meta">
+                    <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+                    <span><strong>🕒 Due:</strong> {{ a.dueDate | date:'medium' }}</span>
+                  </div>
+                </div>
+                <!--comments-->
+                <app-comment-section [assignmentId]="a.id" [userId]="this.userId" [userName]="this.username">
+                </app-comment-section>
+              </div>
+
+
+
+            </li>
+          </ul>
+        </div>
+        <ng-template #noStream>
+          <p>No class content yet. Stay tuned!</p>
+        </ng-template>
+      </div>
+
+      <!-- People Tab -->
+      <div *ngSwitchCase="'people'" class="people-section">
+        <section class="teacher-info">
+          <h3>Teacher</h3>
+          <p class="teacher-name">{{ classroom?.teacherName }}</p>
+        </section>
+
+        <section class="students-list">
+          <h3>Students</h3>
+          <ul>
+            <li *ngFor="let student of classroom?.students">{{ student.fullName }}</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Quizzes Tab -->
+      <div *ngSwitchCase="'quizzes'" class="assignment-section">
+        <div class="section-header">
+          <h3>📝 Quizzes</h3>
+          <button class="create-btn" (click)="openQuizModal()">➕ Create</button>
+        </div>
+        <ul class="assignment-list" *ngIf="quizzes.length > 0; else noQuiz">
+          <li *ngFor="let quiz of quizzes" class="assignment-item">
+            <div class="assignment-title-row">
+              <h4>{{ quiz.title }}</h4>
+              <span class="badge quiz">Quiz</span>
+              <button class="edit-btn" (click)="openQuizModal(quiz)">✏️</button>
+              <button class="delete-btn" (click)="deleteQuiz(quiz.id)">🗑️</button>
+            </div>
+
+            <div class="button-group">
+              <button class="action-btn"
+                [routerLink]="['/dashboard/teacher/quiz', quiz.id, quiz.classroomId]">Quiz</button>
+              <button class="action-btn"
+                [routerLink]="['/dashboard/teacher/SubmissionView', quiz.id, quiz.classroomId]">Submissions</button>
+            </div>
+
+            <div class="assignment-meta">
+              <span><strong>📅 Posted:</strong> {{ quiz.postedOn | date:'medium' }}</span>
+              <span><strong>🕒 Deadline:</strong> {{ quiz.deadline | date:'medium' }}</span>
+            </div>
+
+          </li>
+        </ul>
+        <ng-template #noQuiz>
+          <p>No quizzes available yet.</p>
+        </ng-template>
+      </div>
+
+      <!-- Announcements Tab -->
+      <div *ngSwitchCase="'announcements'" class="assignment-section">
+        <div class="section-header">
+          <h3>📣 Announcements</h3>
+          <button class="create-btn" (click)="openAnnouncementModal()">➕ Create</button>
+        </div>
+        <ul class="assignment-list" *ngIf="announcements.length > 0; else noAnnouncements">
+          <li *ngFor="let a of announcements" class="assignment-item">
+            <div class="assignment-title-row">
+              <h4>{{ a.title }}</h4>
+              <span class="badge announcement">Announcement</span>
+              <button class="edit-btn" (click)="openAnnouncementModal(a)">✏️</button>
+              <button class="delete-btn" (click)="deleteAnnouncement(a.id)">🗑️</button>
+            </div>
+            <p class="assignment-description">{{ a.description }}</p>
+            <div class="assignment-meta">
+              <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+              <span><strong>📢 By:</strong> {{ classroom?.teacherName }}</span>
+            </div>
+          </li>
+        </ul>
+        <ng-template #noAnnouncements>
+          <p>No announcements posted yet.</p>
+        </ng-template>
+      </div>
+
+      <!-- Assignments Tab -->
+      <div *ngSwitchCase="'assignments'" class="assignment-section">
+        <div class="section-header">
+          <h3>📚 Assignments</h3>
+          <button class="create-btn" (click)="openAssignmentModal()">➕ Create</button>
+        </div>
+        <ul class="assignment-list" *ngIf="assignments.length > 0; else noAssignments">
+          <li *ngFor="let a of assignments" class="assignment-item">
+            <div class="assignment-title-row">
+              <h4>{{ a.title }}</h4>
+              <span class="badge assignment">Assignment</span>
+              <button class="edit-btn" (click)="openAssignmentModal(a)">✏️</button>
+              <button class="delete-btn" (click)="deleteAssignment(a.id)">🗑️</button>
+            </div>
+            <p class="assignment-description">{{ a.description }}</p>
+            <button class="assignment-btn" [routerLink]="['/dashboard/teacher/SubmissionList', a.id]">View
+              Submission</button>
+            <div class="assignment-meta">
+              <span><strong>📅 Posted:</strong> {{ a.postedOn | date:'medium' }}</span>
+              <span><strong>🕒 Due:</strong> {{ a.dueDate | date:'medium' }}</span>
+            </div>
+          </li>
+        </ul>
+        <ng-template #noAssignments>
+          <p>No assignments yet.</p>
+        </ng-template>
+      </div>
+
+    </ng-container>
+
+    <!-- Modal -->
+    <div class="modal-backdrop" *ngIf="showModal">
+      <div class="modal">
+        <h3>{{ modalTitle }}</h3>
+        <form (ngSubmit)="submitModalForm()" #form="ngForm">
+          <div *ngIf="modalType === 'announcement'">
+            <input type="text" name="title" [(ngModel)]="modalData.title" placeholder="Title" required />
+            <textarea name="description" [(ngModel)]="modalData.description" placeholder="Description"
+              required></textarea>
+          </div>
+          <div *ngIf="modalType === 'assignment'">
+            <input type="text" name="title" [(ngModel)]="modalData.title" placeholder="Title" required />
+            <textarea name="description" [(ngModel)]="modalData.description" placeholder="Description"
+              required></textarea>
+            <input type="date" name="deadline" [(ngModel)]="modalData.deadline" required />
+          </div>
+          <div *ngIf="modalType === 'quiz'">
+            <input type="text" name="title" [(ngModel)]="modalData.title" placeholder="Title" required />
+            <input type="date" name="deadline" [(ngModel)]="modalData.deadline" required />
+          </div>
+          <div class="modal-actions">
+            <button type="submit" class="primary">✅ {{ isEditing ? 'Update' : 'Create' }}</button>
+            <button type="button" class="cancel" (click)="closeModal()">❌ Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
