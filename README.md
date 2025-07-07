@@ -6,7 +6,8 @@ This is a Classroom Management System built using Angular and ASP.NET Core Web A
 
 ## 📸 Project Preview
 
-![Classroom System Preview]([https://your-image-link-here.com/image.png](https://i.postimg.cc/ydP811z5/teacher-dashboard.png))
+![Classroom System Preview](https://raw.githubusercontent.com/shadr862/classroom/main/images/teacher_dashboard.PNG)
+
 
 > Replace the above link with the actual image URL.
 
@@ -25,7 +26,7 @@ This is a Classroom Management System built using Angular and ASP.NET Core Web A
   - Attempt quizzes and view scores
   - Comment on announcements and assignments
 
-- 💬 **Nested Comments** for announcements and assignments
+- 💬 **Comments** for announcements and assignments
 
 ---
 
