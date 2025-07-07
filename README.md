@@ -6,7 +6,7 @@ This is a Classroom Management System built using Angular and ASP.NET Core Web A
 
 ## 📸 Project Preview
 
-![Classroom System Preview]([https://your-image-link-here.com/image.png](https://i.postimg.cc/ydP811z5/teacher-dashboard.png))
+![Classroom System Preview]((https://github.com/shadr862/classroom/blob/main/images/teacher_dashboard.PNG))
 
 > Replace the above link with the actual image URL.
 
