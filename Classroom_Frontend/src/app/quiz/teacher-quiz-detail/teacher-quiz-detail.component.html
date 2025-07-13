@@ -30,6 +30,11 @@
             <label><input type="radio" name="q{{ i }}" /> {{ question.optionA }}</label>
             <label><input type="radio" name="q{{ i }}" /> {{ question.optionB }}</label>
         </div>
+
+        <!-- short Question -->
+        <div *ngIf="question.questionType === 'shortQuestion'" class="tf-options">
+            <label><input type="text" name="q{{ i }}" /> {{ question.optionA }}</label>
+        </div>
     </div>
 
     <p class="correct-answer">✅ Correct Answer: {{ getCorrectOptionText(question) }}</p>
@@ -44,16 +49,20 @@
         <select [(ngModel)]="newQuestion.questionType">
             <option value="MCQ">Multiple Choice</option>
             <option value="TrueFalse">True/False</option>
+            <option value="shortQuestion">Short Question</option>
         </select>
 
         <label>Question Text</label>
         <input type="text" [(ngModel)]="newQuestion.questionText" placeholder="Enter the question..." />
 
-        <label>Option A</label>
-        <input type="text" [(ngModel)]="newQuestion.optionA" />
 
-        <label>Option B</label>
-        <input type="text" [(ngModel)]="newQuestion.optionB" />
+        <div *ngIf="newQuestion.questionType === 'MCQ' || newQuestion.questionType === 'TrueFalse'">
+            <label>Option A</label>
+            <input type="text" [(ngModel)]="newQuestion.optionA" />
+            <label>Option B</label>
+            <input type="text" [(ngModel)]="newQuestion.optionB" />
+        </div>
+
 
         <div *ngIf="newQuestion.questionType === 'MCQ'">
             <label>Option C</label>

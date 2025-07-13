@@ -18,8 +18,11 @@
         <td>{{ s.student.email }}</td>
         <td>{{ s.score }}</td>
         <td>
+          <button class="view-btn"
+            [routerLink]="['/dashboard/student/quizSubmission', quizId, classId,s.studentId]">🔍 View</button>
           <button class="reset-btn" (click)="deleteSubmission(s.submissionId)">🔁 Reset</button>
         </td>
+
       </tr>
     </tbody>
   </table>
@@ -28,4 +31,3 @@
     <p>No submissions found for this quiz.</p>
   </ng-template>
 </div>
-

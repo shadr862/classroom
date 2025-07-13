@@ -1,43 +1,69 @@
 .submission-container {
-  padding: 24px;
-  background: #f9f9fb;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  background-color: #f9f9ff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .heading {
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
 }
 
 .submission-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .submission-table th,
 .submission-table td {
-  padding: 12px;
-  border: 1px solid #ddd;
+  padding: 1rem;
   text-align: center;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.submission-table th {
-  background-color: #f0f4ff;
-  font-weight: 600;
+.submission-table thead {
+  background-color: #007bff;
+  color: white;
+}
+
+.submission-table tbody tr:hover {
+  background-color: #f1f9ff;
+  transition: background-color 0.3s ease;
+}
+
+.view-btn,
+.reset-btn {
+  padding: 6px 12px;
+  margin: 0 4px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.view-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #218838;
 }
 
 .reset-btn {
-  background-color: #f44336;
+  background-color: #dc3545;
   color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 .reset-btn:hover {
-  background-color: #d32f2f;
+  background-color: #c82333;
 }

@@ -6,9 +6,10 @@ import { QuizService } from '../../services/quiz-Service/quiz.service';
 
 @Component({
   selector: 'app-quiz-submission-details',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './quiz-submission-details.component.html',
-  styleUrl: './quiz-submission-details.component.scss'
+  styleUrl: './quiz-submission-details.component.scss',
 })
 export class QuizSubmissionDetailsComponent {
   class: any;
@@ -16,19 +17,19 @@ export class QuizSubmissionDetailsComponent {
   answers: { [key: string]: string } = {};
   score: any;
 
-
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private classroomService: ClassRoomService,
-    private quizService: QuizService) { }
+    private quizService: QuizService
+  ) {}
 
   ngOnInit() {
-    const studentId = localStorage.getItem('userId')!;
+    const studentId = this.route.snapshot.paramMap.get('studentId')!;
     const quizId = this.route.snapshot.paramMap.get('quizId')!;
-   
+
     this.quizService.getQuizsubmissionbyStudentIdAndQuizId(studentId, quizId).subscribe((data) => {
       this.score = data[0].score;
       this.answers = data[0].answersJson ? JSON.parse(data[0].answersJson) : {};
- 
     });
 
     this.loadQuizQuestions();
@@ -50,11 +51,19 @@ export class QuizSubmissionDetailsComponent {
   }
 
   getCorrectOptionText(question: any): string {
+    if (question.questionType === 'shortQuestion') {
+      return question.correctAnswer;
+    }
     return question[question.correctAnswer];
   }
 
   getAnswerText(question: any, selectedOption: string): string | null {
     if (!selectedOption) return null;
+
+    if (question.questionType === 'shortQuestion') {
+      return selectedOption;
+    }
+
     return question[selectedOption];
   }
 
@@ -78,8 +87,4 @@ export class QuizSubmissionDetailsComponent {
 
     return options;
   }
-
-
-
-
 }

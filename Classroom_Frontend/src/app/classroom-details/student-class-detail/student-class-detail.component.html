@@ -63,7 +63,7 @@
                   </button>
 
                   <button *ngIf="hasAttemptedQuiz(a.id)" class="take-quiz-btn"
-                    [routerLink]="['/dashboard/student/quizSubmission', a.id, a.classroomId]">
+                    [routerLink]="['/dashboard/student/quizSubmission', a.id, a.classroomId,userId]">
                     View Result
                   </button>
 

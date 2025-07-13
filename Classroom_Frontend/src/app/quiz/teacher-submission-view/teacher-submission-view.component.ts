@@ -1,22 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { QuizService } from '../../services/quiz-Service/quiz.service';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-submission-view',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './teacher-submission-view.component.html',
   styleUrl: './teacher-submission-view.component.scss'
 })
 export class TeacherSubmissionViewComponent {
-    submissions: any[] = [];
+  submissions: any[] = [];
   quizId: string = ''; // ← Set this based on route or input
+  classId:string='';
 
-  constructor(private quizService: QuizService) {}
+  constructor(private quizService: QuizService,
+    private route:ActivatedRoute ) {}
 
   ngOnInit(): void {
-    // Example quizId setup (replace with ActivatedRoute if needed)
-    this.quizId = 'c54c8c52-1004-435f-b1ce-d1a2bacc09f4';
+    this.classId=this.route.snapshot.paramMap.get('classId')!;
+    this.quizId=this.route.snapshot.paramMap.get('quizId')!;
     this.loadSubmissions();
   }
 

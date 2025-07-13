@@ -1,23 +1,24 @@
-<!-- 🎓 Class Header (Centered) -->
+<!-- 🎓 Class Header -->
 <div class="class-header text-center">
   <h2 class="class-title">{{ class?.className }}</h2>
   <p class="class-description">{{ class?.description }}</p>
 </div>
 
-<!-- 📝 Quiz Result Summary -->
+<!-- 📝 Quiz Summary -->
 <div class="quiz-summary">
   <h3>Quiz Submission Summary</h3>
   <p><strong>Score Obtained:</strong> {{ score }} / {{ questions?.length }}</p>
 </div>
 
-<!-- 📋 Answers Section -->
+<!-- 📋 Submitted Answers -->
 <h4 class="answers-title">Your Submitted Answers</h4>
 
 <div *ngIf="questions?.length > 0; else noQuestions">
   <div *ngFor="let question of questions; let i = index" class="result-card">
     <p class="question-text"><strong>Q{{ i + 1 }}:</strong> {{ question.questionText }}</p>
 
-    <div class="option-list">
+    <!-- For MCQ and True/False -->
+    <div *ngIf="question.questionType !== 'shortQuestion'" class="option-list">
       <div
         *ngFor="let option of getOptions(question)"
         [ngClass]="{
@@ -35,6 +36,12 @@
           Your Answer
         </span>
       </div>
+    </div>
+
+    <!-- For shortQuestion -->
+    <div *ngIf="question.questionType === 'shortQuestion'" class="short-answer-section">
+      <p><strong>Your Answer:</strong> {{ answers[question.quizId + '_' + question.id] || 'Not answered' }}</p>
+      <p><strong>Correct Answer:</strong> {{ getCorrectOptionText(question) }}</p>
     </div>
 
     <hr />

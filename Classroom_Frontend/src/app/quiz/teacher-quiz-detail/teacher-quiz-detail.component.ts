@@ -52,7 +52,12 @@ export class TeacherQuizDetailComponent {
   }
 
   getCorrectOptionText(question: any): string {
-    return question[question.correctAnswer];
+    if (question.questionType === 'shortQuestion') {
+    return question.correctAnswer; 
+  }
+
+ 
+   return question[question.correctAnswer]; 
   }
 
   openModal() {

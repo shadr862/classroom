@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 
 export const studentCanactiveGuard: CanActivateFn = (route, state) => {
   const role=localStorage.getItem('role');
-  if(role=='student')
+  if(role=='student' || role=='teacher')
   {
      return true;
   }

@@ -9,5 +9,5 @@ export const StudentRoutes:Routes = [
     {path:'',component:StudentDashboardComponent},
     {path:'details/:id',component:StudentClassDetailComponent},
     {path:'quiz/:quizId/:classId', component:StudentQuizDetailComponent  },
-    {path: 'quizSubmission/:quizId/:classId', component: QuizSubmissionDetailsComponent  } 
+    {path: 'quizSubmission/:quizId/:classId/:studentId', component: QuizSubmissionDetailsComponent  } 
 ]
